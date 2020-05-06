@@ -6,6 +6,13 @@
   background-color: #242323;
 }
 
+.description{
+  font-size: 12px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .alignCenter {
   text-align: center;
   align-items: center;

@@ -24,7 +24,8 @@ class Products extends React.Component {
       show:false,
       setShow:false,
       modaltitle:"",
-      alertshow:false
+      alertshow:false,
+      quantityerr:false
     };
   }
 
@@ -82,6 +83,11 @@ class Products extends React.Component {
   }
 
   addtocart(pizza,quantity){
+    this.setState({quantityerr:false,alertshow:false});
+    if(quantity === '' || quantity === null){
+        this.setState({quantityerr:true});
+    }
+    else{
       let id = this.state.currentItem.id;
       let cart = this.state.shoppingCart;
       let duplicate = 0;
@@ -115,7 +121,8 @@ class Products extends React.Component {
        this.setState({alertshow: true});
     }
   }
-  }
+}
+}
 
   addquantity(pizza){
     this.setState({setShow:true});
@@ -160,6 +167,17 @@ class Products extends React.Component {
 
               </div>
 
+              <div className="alignCenter font-weight-bold mt-3 mb-3">
+                {
+                  this.state.itemtype === 'veg'?
+                    <span>Veg Pizza</span>
+                  :this.state.itemtype === 'nonveg'?
+                    <span>Non-Veg Pizza</span>
+                  :this.state.itemtype === 'drinks'?
+                    <span>Drinks</span>:null
+                }
+              </div>
+
               {this.state.alertshow?
               <Alert variant="success" onClose={() => this.setState({alertshow:false})} dismissible>
                 <p>
@@ -168,6 +186,15 @@ class Products extends React.Component {
               </Alert>
               :null
             }
+
+            {this.state.quantityerr?
+            <Alert variant="danger" onClose={() => this.setState({quantityerr:false})} dismissible>
+              <p>
+                Invalid Quantity
+              </p>
+            </Alert>
+            :null
+          }
 
               {this.state.fetching?
               <div><p style={{textAlign: 'center'}}>Please Wait fetching data <img alt="loading url" src={loader} /></p></div>
@@ -180,7 +207,7 @@ class Products extends React.Component {
                   </Modal.Header>
                   <Modal.Body>
                         {this.state.modaltitle}
-                        <input type="text" placeholder="quantity" className="form-control mb-3" ref="quantity" />
+                        <input type="number" placeholder="quantity" className="form-control mb-3" ref="quantity" />
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
@@ -200,8 +227,8 @@ class Products extends React.Component {
                              return <div className="col-md-3 alignCenter productitems ">
                                        <img src={imgdomain+'/'+pizza.image} alt="veg" height="200" />
                                        <div>
-                                        {pizza.name} <span className="p-2">( &#36; {pizza.ratedollar} )</span><br />
-                                        {pizza.description}<br />
+                                        {pizza.name} <span className="p-2">( &#36; {pizza.ratedollar} )</span>
+                                        <div className="description mb-2 pb-2">{pizza.description}</div>
                                         <button onClick={()=>this.addquantity(pizza)}  className="mt-3 btn btn-danger btn-sm btn-block">
                                           ADD TO CART
                                         </button>
@@ -211,8 +238,8 @@ class Products extends React.Component {
                               return <div className="col-md-3 alignCenter productitems ">
                                         <img src={imgdomain+'/'+pizza.image} alt="veg" height="200" />
                                         <div>
-                                         {pizza.name} <span className="p-2">( &euro; {pizza.ratedollar} )</span><br />
-                                         {pizza.description}<br />
+                                         {pizza.name} <span className="p-2">( &euro; {pizza.rateeuro} )</span>
+                                         <div className="description mb-2 pb-2">{pizza.description}</div>
                                          <button onClick={()=>this.addquantity(pizza)} className="mt-3 btn btn-danger btn-sm btn-block">
                                            ADD TO CART
                                          </button>
@@ -224,8 +251,8 @@ class Products extends React.Component {
                           return <div className="col-md-3 alignCenter productitems ">
                                     <img src={imgdomain+'/'+pizza.image} alt="veg" height="200" />
                                     <div>
-                                     {pizza.name} <span className="p-2">( &#36; {pizza.ratedollar} )</span><br />
-                                     {pizza.description}<br />
+                                     {pizza.name} <span className="p-2">( &#36; {pizza.ratedollar} )</span>
+                                     <div className="description mb-2">{pizza.description}</div>
                                      <button onClick={()=>this.addquantity(pizza)}  className="mt-3 btn btn-danger btn-sm btn-block">
                                        ADD TO CART
                                      </button>
@@ -235,8 +262,8 @@ class Products extends React.Component {
                            return <div className="col-md-3 alignCenter productitems ">
                                      <img src={imgdomain+'/'+pizza.image} alt="veg" height="200" />
                                      <div>
-                                      {pizza.name} <span className="p-2">( &euro; {pizza.ratedollar} )</span><br />
-                                      {pizza.description}<br />
+                                      {pizza.name} <span className="p-2">( &euro; {pizza.rateeuro} )</span>
+                                      <div className="description mb-2">{pizza.description}</div>
                                       <button onClick={()=>this.addquantity(pizza)} className="mt-3 btn btn-danger btn-sm btn-block">
                                         ADD TO CART
                                       </button>

@@ -13,8 +13,17 @@ class Home extends React.Component {
     super(props);
     let cur = localStorage.getItem('currency');
 
+    let cleared = localStorage.getItem('cartclear');
+
+    if(!cleared)
+    {
+      localStorage.removeItem('shoppingCart');
+      localStorage.setItem('cartclear',true);
+    }
+
     if(cur === '' || cur === null){
       localStorage.setItem('currency','dollar');
+
     }
   }
 

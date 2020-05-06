@@ -108,7 +108,7 @@ class Cart extends React.Component {
              : null
           }
           {
-            this.state.cartempty? <div>cart empty</div>:
+            this.state.cartempty? <div className="alignCenter mt-3 mb-3">Cart Empty. Continue shopping.</div>:
               this.state.cart.map((pizza, index) => {
                   if(this.state.currency === 'dollar')
                        return <div className="row ml-3 mt-2">
@@ -164,7 +164,6 @@ class Cart extends React.Component {
               </>
             : null
          }
-         <Footer />
          </div>
       )
    }
